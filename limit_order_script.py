@@ -17,15 +17,15 @@ RPC_URL = "https://mainnet.infura.io/v3/650e1c889a15420b8567dfe1a12e2461"
 
 # Swap Configuration
 SELL_TOKEN = "0xdAC17F958D2ee523a2206206994597C13D831ec7"  # USDT
-BUY_TOKEN = "0x1B073382E63411E3BcfFE90aC1B9A43feFa1Ec6F"   # BEST
+BUY_TOKEN = "0x1B073382E63411E3BcfFE90aC1B9A43feFa1Ec6F"   # {BUY_TOKEN}
 SELL_AMOUNT = 60  # Amount of tokens to sell (in human-readable units)
 SELL_TOKEN_DECIMALS = 6  # USDT has 6 decimals
-BUY_TOKEN_DECIMALS = 8  # BEST token decimals (CHECK THIS ON ETHERSCAN!)
+BUY_TOKEN_DECIMALS = 8  # {BUY_TOKEN} token decimals (CHECK THIS ON ETHERSCAN!)
 
 # ========================================
 # LIMIT ORDER SETTINGS - THIS IS KEY!
 # ========================================
-TARGET_PRICE = 90  # Target: Get at least ${TARGET_PRICE} BEST for ${SELL_AMOUNT} USDT
+TARGET_PRICE = 90  # Target: Get at least ${TARGET_PRICE} {BUY_TOKEN} for ${SELL_AMOUNT} USDT
 CHECK_INTERVAL = 2  # Check price every 2 seconds
 MAX_SLIPPAGE_PERCENT = 0  # Allow 0% slippage from target
 
@@ -370,8 +370,8 @@ async def monitor_and_execute():
     print("=" * 60)
     print(f"Account: {account.address}")
     print(f"Selling: {SELL_AMOUNT} USDT")
-    print(f"Buying: BEST")
-    print(f"Target: At least {TARGET_PRICE} BEST")
+    print(f"Buying: {BUY_TOKEN}")
+    print(f"Target: At least {TARGET_PRICE} {BUY_TOKEN}")
     print(f"Checking every: {CHECK_INTERVAL} seconds")
     if has_max_runtime:
         runtime_str = []
@@ -395,7 +395,7 @@ async def monitor_and_execute():
     # Convert sell amount to token units
     amount_in_token_units = int(SELL_AMOUNT * (10 ** SELL_TOKEN_DECIMALS))
     
-    # Build swap path - USDT → WETH → BEST (standard Uniswap V2 routing)
+    # Build swap path - USDT → WETH → {BUY_TOKEN} (standard Uniswap V2 routing)
     swap_path = [SELL_TOKEN, WETH_ADDRESS, BUY_TOKEN]
     
     # Calculate minimum acceptable tokens in raw units (with slippage)
@@ -424,8 +424,8 @@ async def monitor_and_execute():
         print(f"   Need: ~{max_gas_eth} ETH, Have: {eth_balance_human} ETH")
     
     print(f"\n🔍 Starting price monitoring...")
-    print(f"   Will execute when price >= {TARGET_PRICE} BEST")
-    print(f"   Minimum acceptable: {target_tokens_human} BEST (with {MAX_SLIPPAGE_PERCENT}% slippage)")
+    print(f"   Will execute when price >= {TARGET_PRICE} {BUY_TOKEN}")
+    print(f"   Minimum acceptable: {target_tokens_human} {BUY_TOKEN} (with {MAX_SLIPPAGE_PERCENT}% slippage)")
     print(f"   (In raw blockchain units: {min_acceptable})")
     print(f"\n   Press Ctrl+C to stop monitoring\n")
     
@@ -457,13 +457,13 @@ async def monitor_and_execute():
             else:
                 # Convert raw blockchain value to human-readable
                 current_price_human = current_output / (10 ** BUY_TOKEN_DECIMALS)
-                print(f"[{timestamp}] Check #{check_count}: Current price = {current_price_human:.4f} BEST for {SELL_AMOUNT} USDT")
+                print(f"[{timestamp}] Check #{check_count}: Current price = {current_price_human:.4f} {BUY_TOKEN} for {SELL_AMOUNT} USDT")
                 
                 # Check if price meets our target (comparing raw values)
                 if current_output >= min_acceptable:
                     print(f"\n🎯 TARGET PRICE MET!")
-                    print(f"   Current: {current_price_human:.4f} BEST")
-                    print(f"   Target: {TARGET_PRICE} BEST")
+                    print(f"   Current: {current_price_human:.4f} {BUY_TOKEN}")
+                    print(f"   Target: {TARGET_PRICE} {BUY_TOKEN}")
                     print(f"   Executing order NOW...")
                     
                     bundle_hash = await execute_order(

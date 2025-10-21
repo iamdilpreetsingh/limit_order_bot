@@ -1,0 +1,63 @@
+# ========================================
+# .dockerignore
+# ========================================
+# Files and directories to exclude from Docker build context
+# This makes builds faster and images smaller
+
+# Virtual environments
+venv/
+path/to/venv/
+env/
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Documentation (we don't need docs inside the container)
+*.md
+!README.md
+
+# Config files (will be mounted separately)
+configs/
+
+# Deployment scripts (not needed in container)
+launcher.py
+launcher.sh
+cancel_script.py
+limit_order_multi.py
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test files
+test_*.py
+*_test.py
+
+# Logs
+*.log
+logs/
+
+# Other
+.env
+.env.*
+docker-compose.yml
+Dockerfile
+.dockerignore
+
