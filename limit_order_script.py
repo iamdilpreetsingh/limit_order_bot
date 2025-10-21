@@ -1,9 +1,25 @@
 import asyncio
 import time
 import requests
+import os
+import sys
 from web3 import Web3
 from eth_account import Account
 from pythereum import TitanBuilder, BuilderRPC, Bundle
+
+# ========================================
+# DYNAMIC CONFIG LOADER (for Docker)
+# ========================================
+config_file = os.environ.get('CONFIG_FILE')
+if config_file and os.path.exists(config_file):
+    print(f"📦 Loading configuration from: {config_file}")
+    with open(config_file, 'r') as f:
+        exec(f.read(), globals())  # Load into global scope
+    print("✅ Configuration loaded successfully")
+else:
+    print("❌ No config file specified or found!")
+    print("   Set CONFIG_FILE environment variable")
+    sys.exit(1)
 
 # ========================================
 # CONFIGURATION - Loaded from External Config Files
