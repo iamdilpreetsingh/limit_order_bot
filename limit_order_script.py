@@ -14,7 +14,8 @@ config_file = os.environ.get('CONFIG_FILE')
 if config_file and os.path.exists(config_file):
     print(f"📦 Loading configuration from: {config_file}")
     with open(config_file, 'r') as f:
-        exec(f.read(), globals())  # Load into global scope
+        config_code = f.read()
+        exec(config_code)  # Execute in current scope
     print("✅ Configuration loaded successfully")
 else:
     print("❌ No config file specified or found!")
