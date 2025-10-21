@@ -13,9 +13,17 @@ from pythereum import TitanBuilder, BuilderRPC, Bundle
 config_file = os.environ.get('CONFIG_FILE')
 if config_file and os.path.exists(config_file):
     print(f"📦 Loading configuration from: {config_file}")
-    # Load config file and execute in module's global namespace
-    with open(config_file, 'r') as f:
-        exec(compile(f.read(), config_file, 'exec'), globals())
+    # Import config file as module to get proper global scope
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("config", config_file)
+    config_module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(config_module)
+    
+    # Copy all config variables to global namespace
+    for key in dir(config_module):
+        if not key.startswith('_'):  # Skip private attributes
+            globals()[key] = getattr(config_module, key)
+    
     print("✅ Configuration loaded successfully")
 else:
     print("❌ No config file specified or found!")
