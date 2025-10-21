@@ -6,39 +6,30 @@ from eth_account import Account
 from pythereum import TitanBuilder, BuilderRPC, Bundle
 
 # ========================================
-# CONFIGURATION - Edit these values
+# CONFIGURATION - Loaded from External Config Files
 # ========================================
-
-# Your Ethereum private key (keep it secret!)
-PRIVATE_KEY = "6c6338e824fcb10f01d7ac61876dac98dbf9de115964914d428353ba43293dc5"
-
-# RPC endpoint
-RPC_URL = "https://mainnet.infura.io/v3/650e1c889a15420b8567dfe1a12e2461"
-
-# Swap Configuration
-SELL_TOKEN = "0xdAC17F958D2ee523a2206206994597C13D831ec7"  # USDT
-BUY_TOKEN = "0x1B073382E63411E3BcfFE90aC1B9A43feFa1Ec6F"   # {BUY_TOKEN}
-SELL_AMOUNT = 60  # Amount of tokens to sell (in human-readable units)
-SELL_TOKEN_DECIMALS = 6  # USDT has 6 decimals
-BUY_TOKEN_DECIMALS = 8  # {BUY_TOKEN} token decimals (CHECK THIS ON ETHERSCAN!)
-
+# All configuration MUST be provided via external config files.
+# Set CONFIG_FILE environment variable to point to your config file.
+# Example: CONFIG_FILE=/app/configs/config_1.py
+#
+# Required config variables:
+# - PRIVATE_KEY: Your wallet private key (or loaded from AWS Secrets Manager)
+# - RPC_URL: Ethereum RPC endpoint
+# - SELL_TOKEN: Token to sell (address)
+# - BUY_TOKEN: Token to buy (address)
+# - SELL_AMOUNT: Amount to sell
+# - SELL_TOKEN_DECIMALS: Decimals of sell token
+# - BUY_TOKEN_DECIMALS: Decimals of buy token
+# - TARGET_PRICE: Minimum tokens to receive
+# - CHECK_INTERVAL: Seconds between price checks
+# - MAX_SLIPPAGE_PERCENT: Maximum slippage tolerance
+# - MAX_RUNTIME_DAYS/MONTHS/YEARS: Maximum runtime
+# - GAS_PRICE_GWEI: Gas price in gwei
+# - APPROVE_GAS_LIMIT: Gas limit for approve transaction
+# - SWAP_GAS_LIMIT: Gas limit for swap transaction
+# - BUNDLE_CHECK_DELAY: Seconds to wait before checking bundle status
+# - MAX_BUNDLE_CHECKS: Maximum number of bundle status checks
 # ========================================
-# LIMIT ORDER SETTINGS - THIS IS KEY!
-# ========================================
-TARGET_PRICE = 90  # Target: Get at least ${TARGET_PRICE} {BUY_TOKEN} for ${SELL_AMOUNT} USDT
-CHECK_INTERVAL = 2  # Check price every 2 seconds
-MAX_SLIPPAGE_PERCENT = 0  # Allow 0% slippage from target
-
-# Max Runtime Settings
-MAX_RUNTIME_DAYS = 1  # Maximum days to run (set to 0 to disable)
-MAX_RUNTIME_MONTHS = 0  # Maximum months to run (set to 0 to disable)
-MAX_RUNTIME_YEARS = 0  # Maximum years to run (set to 0 to disable)
-# Note: If multiple are set, they are additive (e.g., 1 month + 7 days = 37 days total)
-
-# Gas settings
-GAS_PRICE_GWEI = 5  # Lower gas price since we're not in a hurry
-APPROVE_GAS_LIMIT = 80000
-SWAP_GAS_LIMIT = 500000  # Higher limit for safety
 
 # ========================================
 # Constants
