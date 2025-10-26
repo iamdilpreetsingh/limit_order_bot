@@ -48,10 +48,18 @@ def get_secret():
 config_file = os.environ.get('CONFIG_FILE')
 if config_file and os.path.exists(config_file):
     print(f"📦 Loading configuration from: {config_file}")
-    with open(config_file, 'r') as f:
-        # Execute config file - provide both globals and locals as same dict
-        # This ensures variables are defined at module level
-        exec(f.read(), globals(), globals())
+    
+    # Load config file as a module
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("config", config_file)
+    config_module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(config_module)
+    
+    # Copy all variables from config module to global scope
+    for attr_name in dir(config_module):
+        if not attr_name.startswith('_'):  # Skip private attributes
+            globals()[attr_name] = getattr(config_module, attr_name)
+    
     print("✅ Configuration loaded successfully")
     
     # Fetch PRIVATE_KEY from AWS Secrets Manager (NO FALLBACK)
