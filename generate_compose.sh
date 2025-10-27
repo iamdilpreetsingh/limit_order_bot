@@ -37,7 +37,7 @@ for config in configs/config_*.py; do
     restart: unless-stopped
     environment:
       - CONFIG_FILE=/app/configs/$config_name.py
-      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_DEFAULT_REGION=eu-north-1
     volumes:
       - ./configs:/app/configs:ro
     networks:

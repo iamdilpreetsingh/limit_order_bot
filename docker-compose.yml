@@ -3,9 +3,61 @@ services:
   trader-1:
     build: .
     container_name: titan-trader-1
-    restart: unless-stopped
+    restart: 'no'
     environment:
       - CONFIG_FILE=/app/configs/config_1.py
+      - AWS_DEFAULT_REGION=eu-north-1
+      - AWS_REGION=eu-north-1
+    volumes:
+      - ./configs:/app/configs:ro
+    networks:
+      - trading-network
+
+  trader-2:
+    build: .
+    container_name: titan-trader-2
+    restart: 'no'
+    environment:
+      - CONFIG_FILE=/app/configs/config_2.py
+      - AWS_DEFAULT_REGION=eu-north-1
+      - AWS_REGION=eu-north-1
+    volumes:
+      - ./configs:/app/configs:ro
+    networks:
+      - trading-network
+
+  trader-3:
+    build: .
+    container_name: titan-trader-3
+    restart: 'no'
+    environment:
+      - CONFIG_FILE=/app/configs/config_3.py
+      - AWS_DEFAULT_REGION=eu-north-1
+      - AWS_REGION=eu-north-1
+    volumes:
+      - ./configs:/app/configs:ro
+    networks:
+      - trading-network
+
+  trader-4:
+    build: .
+    container_name: titan-trader-4
+    restart: 'no'
+    environment:
+      - CONFIG_FILE=/app/configs/config_4.py
+      - AWS_DEFAULT_REGION=eu-north-1
+      - AWS_REGION=eu-north-1
+    volumes:
+      - ./configs:/app/configs:ro
+    networks:
+      - trading-network
+
+  trader-5:
+    build: .
+    container_name: titan-trader-5
+    restart: 'no'
+    environment:
+      - CONFIG_FILE=/app/configs/config_5.py
       - AWS_DEFAULT_REGION=eu-north-1
       - AWS_REGION=eu-north-1
     volumes:

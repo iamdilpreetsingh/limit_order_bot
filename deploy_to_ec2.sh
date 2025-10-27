@@ -19,7 +19,7 @@ set -e  # Exit on any error
 # Configuration - EDIT THESE VALUES
 # ========================================
 
-EC2_HOST="56.228.22.180"           # Your EC2 public IP or hostname
+EC2_HOST="13.60.194.90"           # Your EC2 public IP or hostname
 EC2_USER="ubuntu"                         # SSH user (ubuntu for Ubuntu, ec2-user for Amazon Linux)
 SSH_KEY="~/.ssh/limit_order_bot.pem"            # Path to your SSH private key
 REPO_URL="https://github.com/iamdilpreetsingh/limit_order_bot"             # Your GitHub repo URL
