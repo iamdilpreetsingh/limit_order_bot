@@ -16,7 +16,7 @@ from pythereum import TitanBuilder, BuilderRPC, Bundle
 def get_secret():
     """Fetch PRIVATE_KEY from AWS Secrets Manager"""
     secret_name = "limit-order-bot/wallet-key"
-    region_name = os.environ.get('AWS_DEFAULT_REGION', 'eu-north-1')
+    region_name = 'eu-north-1'
     
     # Create a Secrets Manager client
     session = boto3.session.Session()
