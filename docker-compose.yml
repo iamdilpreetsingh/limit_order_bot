@@ -6,6 +6,8 @@ services:
     restart: unless-stopped
     environment:
       - CONFIG_FILE=/app/configs/config_1.py
+      - AWS_DEFAULT_REGION=eu-north-1
+      - AWS_REGION=eu-north-1
     volumes:
       - ./configs:/app/configs:ro
     networks:
